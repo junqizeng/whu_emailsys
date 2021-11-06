@@ -146,11 +146,17 @@ class Mailbox:
         self.recvlist_panel.mail_list.clear()
         list_flag, list_report = self.mail_toolkit.mail_read_all()
         if not list_flag:
-            login_message = mailtoolkit.pop_message(
-                win=self.client_win, title='错误', icon=QMessageBox.Critical, report=list_report)
-            login_message.show()
-            return
-        mails = list_report[:-1].split(',')
+            if list_report == '0':
+                login_message = mailtoolkit.pop_message(
+                    win=self.client_win, title='收件箱提醒', icon=QMessageBox.Information,
+                    report='收件箱为空！\n快和朋友们多多联系吧！')
+                login_message.show()
+                return
+            else:
+                login_message = mailtoolkit.pop_message(
+                    win=self.client_win, title='错误', icon=QMessageBox.Critical, report=list_report)
+                login_message.show()
+                return
         i = 0
         for mail in mails:
             mail = mail.split('^>')
