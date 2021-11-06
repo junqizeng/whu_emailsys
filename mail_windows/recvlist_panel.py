@@ -47,15 +47,15 @@ class RecvPanel:
         self.receiver.show()
 
 
-if __name__ == '__main__':
-    import sys
-    from PyQt5.QtWidgets import QApplication, QWidget
-    app = QApplication(sys.argv)
+# if __name__ == '__main__':
+#     import sys
+#     from PyQt5.QtWidgets import QApplication, QWidget
+#     app = QApplication(sys.argv)
 
-    login_win = QWidget()
-    login_win.setFixedSize(850, 650)
-    recv = RecvPanel(login_win)
+#     login_win = QWidget()
+#     login_win.setFixedSize(850, 650)
+#     recv = RecvPanel(login_win)
 
-    login_win.show()
+#     login_win.show()
 
-    sys.exit(app.exec_())
+#     sys.exit(app.exec_())
