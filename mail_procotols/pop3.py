@@ -5,7 +5,7 @@ from mail_procotols import mailtoolkit
 
 pop3_sever = {
     '@163.com': 'pop.163.com',
-    '@whu.edu.cn': 'pop3.whu.edu.cn',
+    '@whu.edu.cn': 'whu.edu.cn',
     '@qq.com': 'pop.qq.com'
 }
 
@@ -75,11 +75,13 @@ class POP3:
         client_pop.set_debuglevel(1)
         client_pop.user(self.account)
         client_pop.pass_(self.author_code)
+        print("Messages: %s Size: %s" % (client_pop.stat()))
         _, mail_content, _ = client_pop.retr(mail_index)
         if mail_content is None:
             return False, '邮件内容获取失败！\n请检查网络设置！'
         # print(mail_content)
-        client_pop.quit()
+        if self.acc_mail != '@whu.edu.cn':
+            client_pop.quit()
         return True, mail_content
 
     def mail_dele(self, dele_num, client_socket):
@@ -106,16 +108,17 @@ class POP3:
                 return False, '邮件内容获取失败！\n请检查网络设置！'
             mail = mailtoolkit.process_mail_basic(mail_content)
             all_mail = all_mail + '%s^>%s^>%s,' % (mail['subject'], mail['sender'], mail['time'])
-        client_pop.quit()
+        if self.acc_mail != '@whu.edu.cn':
+            client_pop.quit()
         return True, all_mail
 
 
-# if __name__ == '__main__':
-#     mail_index = 1
-#     acc_mail = '@163.com'
-#     account = ''
-#     author_code = ''
-#     clinet_pop = POP3(acc_mail=acc_mail, account=account, author_code=author_code)
-#     _, mail = clinet_pop.mail_read(mail_index=mail_index)
-#     mail = mailtoolkit.process_mail(mail, mail_acc=account)
-#     print(mail)
+if __name__ == '__main__':
+    mail_index = 1
+    acc_mail = '@whu.edu.cn'
+    account = ''
+    author_code = ''
+    clinet_pop = POP3(acc_mail=acc_mail, account=account, author_code=author_code)
+    _, mail = clinet_pop.mail_read(mail_index=mail_index)
+    mail = mailtoolkit.process_mail(mail, mail_acc=account)
+    print(mail)
