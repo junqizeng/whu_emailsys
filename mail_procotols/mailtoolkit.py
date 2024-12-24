@@ -122,7 +122,7 @@ class MailToolkit:
         smpt_socket.sendall(self.client_smtp.smtp_command['QUIT'])
 
         pop_login, pop_report, pop_socket = self.client_pop.login_veri()
-        if not smtp_login:
+        if not pop_login:
             return False, pop_report
         pop_socket.sendall(self.client_pop.pop_command['QUIT'])
 
